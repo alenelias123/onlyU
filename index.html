@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Face-Verified E2EE Chat</title>
+    <link href="style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- View 1: Initial Setup -->
+        <div id="setup-view" class="view-container setup-view">
+            <h1>Welcome to Secure Chat</h1>
+            <p id="register-instructions" class="subtitle">To begin, please register your face to create a secure identity.</p>
+            <div id="videoContainer">
+                <video id="video" playsinline autoplay muted></video>
+                <canvas id="canvas"></canvas>
+            </div>
+            <button id="register-btn" class="btn" disabled>
+                Start 3-Second Face Scan
+            </button>
+        </div>
+
+        <!-- View 2: Main Chat Interface -->
+        <div id="chat-view" class="hidden">
+            <div class="chat-layout">
+                <!-- Left Panel -->
+                <div class="info-panel">
+                    <h2>Your Info</h2>
+                    <p>Your Unique ID (Click to copy):</p>
+                    <p id="my-uuid"></p>
+                    <button id="logout-btn" class="btn btn-secondary">Logout & Clear ID</button>
+                    
+                    <!-- Manual Chat Start Section -->
+                    <div class="manual-chat-start">
+                        <h2>Start a Chat</h2>
+                        <input type="text" id="manual-uuid-input" placeholder="Paste a user's UUID here">
+                        <button id="manual-chat-btn" class="btn btn-primary">Chat</button>
+                    </div>
+
+                    <h2>Online Users</h2>
+                    <div id="user-list"></div>
+                </div>
+
+                <!-- Right Panel -->
+                <div class="chat-panel">
+                    <h2>Chat</h2>
+                    <p>Chatting with: <span id="chat-partner-uuid">None</span></p>
+                    <div id="chat-window">
+                        <p class="chat-placeholder">Select an online user or enter a UUID to start chatting.</p>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="message-input" placeholder="Write an encrypted message..." disabled>
+                        <button id="send-btn" class="btn btn-primary" disabled>Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Face Verification -->
+    <div id="decrypt-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Verify Face to Decrypt</h2>
+            <p class="subtitle">To read this message, please verify your identity.</p>
+            <div id="modalVideoContainer">
+                <video id="modalVideo" playsinline autoplay muted></video>
+                <canvas id="modalCanvas"></canvas>
+            </div>
+            <div class="modal-buttons">
+                <button id="verify-decrypt-btn" class="btn btn-success">Verify & Read</button>
+                <button id="cancel-decrypt-btn" class="btn btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Message Area -->
+    <div id="status-container">
+         <p id="statusMessage"></p>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+    <script src="main.js"></script>
+
+</body>
+</html>
